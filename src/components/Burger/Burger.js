@@ -5,12 +5,25 @@ import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
 
 const burger = props => {
+
+    let transfromIngredients = Object.keys(props.ingredients)
+            .map(igkey => {
+                return  [...Array(props.ingredients[igkey])]
+                .map((_,i) => {
+                    return <BurgerIngredient key={igkey +i} type={igkey} />
+                })
+            })
+            .reduce((arr, el) => {
+                return arr.concat(el);
+            },[]);
+        if(transfromIngredients.length === 0) 
+        transfromIngredients = <p>Please Enter Ingredients</p>;
+    
     return (
         <div className={classes.Burger}>
          
          <BurgerIngredient type="bread-top" /> 
-         <BurgerIngredient type="cheese" />
-         <BurgerIngredient type="salad" />      
+          {transfromIngredients}      
          <BurgerIngredient type="bread-bottom" />
         </div>
     )
